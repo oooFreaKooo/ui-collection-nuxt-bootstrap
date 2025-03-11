@@ -1,0 +1,268 @@
+@use "./settings/variables" as *;
+@use "./settings/typography" as *;
+@use "./settings/mixins" as *;
+@use "./accessibility" as *;
+
+
+// Main theme colors
+$primary: #001B46;
+$secondary: #8AB31D;
+$tertiary: #E6E7EC;
+$success: #28a745;
+$info: #17a2b8;
+$warning: #ffc107;
+$danger: #dc3545;
+$light: #f8f9fa;
+$dark: #2b2b2b;
+
+$primary-dark: #4c87ca;
+$secondary-dark: #54b31d;
+$tertiary-dark: rgb(31, 31, 31);
+$success-dark: #2fb344;
+$info-dark: #1bb7d0;
+$warning-dark: #ffcd39;
+$danger-dark: #e4443c;
+$light-dark: #313131;
+$dark-dark: #e4e4e4;
+
+.container {
+    @each $breakpoint, $container-max-width in $container-max-widths {
+        @include media-breakpoint-up($breakpoint) {
+            max-width: $container-max-width;
+        }
+    }
+}
+
+.text-shadow {
+    text-shadow: 0px 2px 18px rgba(0, 0, 0, 0.5);
+}
+
+@supports (scrollbar-color: auto) {
+    html {
+        scrollbar-color: var(--bs-muted) var(--bs-dark);
+    }
+}
+
+/* Otherwise, use `::-webkit-scrollbar-*` pseudo-elements */
+@supports selector(::-webkit-scrollbar) {
+    html::-webkit-scrollbar {
+        background: var(--bs-muted);
+    }
+
+
+    html::-webkit-scrollbar-thumb {
+        background: var(--bs-dark);
+    }
+}
+
+
+// Initial color definitions
+$primary-text-emphasis: shade-color($primary, 60%);
+$secondary-text-emphasis: shade-color($secondary, 60%);
+$tertiary-text-emphasis: shade-color($tertiary, 60%);
+$success-text-emphasis: shade-color($success, 60%);
+$info-text-emphasis: shade-color($info, 60%);
+$warning-text-emphasis: shade-color($warning, 60%);
+$danger-text-emphasis: shade-color($danger, 60%);
+$light-text-emphasis: $dark;
+$dark-text-emphasis: $light;
+
+// Shadow variables for light mode
+$box-shadow: 0 .5rem 1rem rgba($dark, .15);
+$box-shadow-sm: 0 .125rem .25rem rgba($dark, .075);
+$box-shadow-lg: 0 1rem 3rem rgba($dark, .175);
+$box-shadow-inset: inset 0 1px 2px rgba($dark, .075);
+
+// Shadow variables for dark mode
+$box-shadow-dark: 0 .5rem 1rem rgba(darken($dark, 50%), .15);
+$box-shadow-sm-dark: 0 .125rem .25rem rgba(darken($dark, 50%), .075);
+$box-shadow-lg-dark: 0 1rem 3rem rgba(darken($dark, 50%), .175);
+$box-shadow-inset-dark: inset 0 1px 2px rgba(darken($dark, 50%), .075);
+
+
+// Dark mode text emphasis colors
+$primary-text-emphasis-dark: tint-color($primary-dark, 40%);
+$secondary-text-emphasis-dark: tint-color($secondary-dark, 40%);
+$tertiary-text-emphasis-dark: tint-color($tertiary-dark, 40%);
+$success-text-emphasis-dark: tint-color($success-dark, 40%);
+$info-text-emphasis-dark: tint-color($info-dark, 40%);
+$warning-text-emphasis-dark: tint-color($warning-dark, 40%);
+$danger-text-emphasis-dark: tint-color($danger-dark, 40%);
+$light-text-emphasis-dark: $light;
+$dark-text-emphasis-dark: $secondary;
+
+// Theme color maps - using the variables
+$themes: (
+    light: ("primary": $primary,
+        "secondary": $secondary,
+        "tertiary": $tertiary,
+        "success": $success,
+        "info": $info,
+        "warning": $warning,
+        "danger": $danger,
+        "light": $light,
+        "dark": $dark ),
+    dark: ("primary": $primary-dark,
+        "secondary": $secondary-dark,
+        "tertiary": $tertiary-dark,
+        "success": $success-dark,
+        "info": $info-dark,
+        "warning": $warning-dark,
+        "danger": $danger-dark,
+        "light": $light-dark,
+        "dark": $dark-dark )
+);
+
+$color-mode-type: data-bs-theme;
+
+// Mixin for button styles
+@mixin button-variant($color, $theme-colors) {
+    --bs-btn-bg: #{$color};
+    --bs-btn-border-color: #{rgba($color, .25)};
+    --bs-btn-hover-bg: #{darken($color, 5%)};
+    --bs-btn-hover-border-color: #{rgba($color, .25)};
+    --bs-btn-active-bg: #{darken($color, 10%)};
+    --bs-btn-active-border-color: #{rgba($color, .5)};
+    --bs-btn-focus-border-color: #{rgba($color, .5)};
+    --bs-btn-focus-box-shadow: 0 0 0 .25rem #{rgba($color, .2)};
+}
+
+@mixin button-outline-variant($color, $theme-colors) {
+    --bs-btn-color: #{$color};
+    --bs-btn-border-color: #{$color};
+    --bs-btn-hover-color: #{map-get($theme-colors, "light")};
+    --bs-btn-hover-bg: #{$color};
+    --bs-btn-hover-border-color: #{$color};
+    --bs-btn-active-color: #{map-get($theme-colors, "light")};
+    --bs-btn-active-bg: #{$color};
+    --bs-btn-active-border-color: #{$color};
+    --bs-btn-focus-border-color: #{$color};
+    --bs-btn-focus-box-shadow: 0 0 0 .25rem #{rgba($color, .2)};
+}
+
+@mixin generate-theme($theme-colors) {
+
+    // Generate base color variables
+    @each $color, $value in $theme-colors {
+        --bs-#{$color}: #{$value};
+        --bs-#{$color}-rgb: #{red($value)},
+        #{green($value)},
+        #{blue($value)};
+
+        // Direct subtle color variants
+        --bs-#{$color}-subtle: #{if(map-get($theme-colors, "light") == $light, rgba($value, 0.1), rgba($value, 0.2))};
+
+        // Border colors for each theme color
+        --bs-border-color-#{$color}: #{$value};
+        --bs-border-color-#{$color}-rgb: #{red($value)},
+        #{green($value)},
+        #{blue($value)};
+        --bs-border-color-#{$color}-subtle: #{rgba($value, 0.1)};
+        --bs-border-color-#{$color}-translucent: #{rgba($value, 0.175)};
+
+        // Subtle background variants
+        --bs-#{$color}-bg-subtle: var(--bs-#{$color}-subtle);
+        --bs-#{$color}-border-subtle: #{if(map-get($theme-colors, "light") == $light, rgba($value, 0.2), rgba($value, 0.3))};
+        --bs-#{$color}-text-emphasis: #{if(map-get($theme-colors, "light") == $light, rgba($value, 0.75), rgba($value, 0.9))};
+
+        // Button variants
+        .btn-#{$color} {
+            @include button-variant($value, $theme-colors);
+        }
+
+        .btn-outline-#{$color} {
+            @include button-outline-variant($value, $theme-colors);
+        }
+
+        // Add subtle background utilities
+        .bg-#{$color}-subtle {
+            background-color: var(--bs-#{$color}-bg-subtle) !important;
+        }
+
+        .border-#{$color}-subtle {
+            border-color: var(--bs-#{$color}-border-subtle) !important;
+        }
+
+        .text-#{$color}-emphasis {
+            color: var(--bs-#{$color}-text-emphasis) !important;
+        }
+    }
+
+    // Theme-specific variables
+    --bs-body-bg: #{map-get($theme-colors, "light")};
+    --bs-body-color: #{if(map-get($theme-colors, "light") == $light, $primary-text-emphasis, $primary-text-emphasis-dark)};
+    --bs-heading-color: #{if(map-get($theme-colors, "light") == $light, $primary-text-emphasis, $primary-text-emphasis-dark)};
+
+    // Shadow variables based on theme
+    --bs-box-shadow: #{if(map-get($theme-colors, "light") == $light, $box-shadow, $box-shadow-dark)};
+    --bs-box-shadow-sm: #{if(map-get($theme-colors, "light") == $light, $box-shadow-sm, $box-shadow-sm-dark)};
+    --bs-box-shadow-lg: #{if(map-get($theme-colors, "light") == $light, $box-shadow-lg, $box-shadow-lg-dark)};
+    --bs-box-shadow-inset: #{if(map-get($theme-colors, "light") == $light, $box-shadow-inset, $box-shadow-inset-dark)};
+
+    // Fix for border utilities
+    .border {
+        border-color: var(--bs-border-color) !important;
+    }
+
+    @each $color, $value in $theme-colors {
+        .border-#{$color} {
+            border-color: #{rgba($value, var(--bs-border-opacity))} !important;
+        }
+    }
+
+    // Background utilities
+    @each $color, $value in $theme-colors {
+        .bg-#{$color} {
+            background-color: #{rgba($value, var(--bs-bg-opacity))} !important;
+        }
+    }
+
+    // Fix for bg-body
+    .bg-body {
+        background-color: var(--bs-body-bg) !important;
+    }
+
+    // Add text color utilities
+    @each $color, $value in $theme-colors {
+        .text-#{$color} {
+            color: #{$value} !important;
+        }
+    }
+
+    // Add heading color utilities
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p {
+        color: var(--bs-heading-color) !important;
+    }
+}
+
+// Color mode mixin definition
+@mixin color-mode($mode) {
+    @if $mode ==dark {
+        [data-bs-theme="dark"] {
+            @content;
+        }
+    }
+
+    @else {
+        [data-bs-theme="#{$mode}"] {
+            @content;
+        }
+    }
+}
+
+// Apply themes
+:root {
+    @include generate-theme(map-get($themes, "light"));
+}
+
+@include color-mode(dark) {
+    @include generate-theme(map-get($themes, "dark"));
+}
+
+@import "bootstrap/scss/bootstrap";
