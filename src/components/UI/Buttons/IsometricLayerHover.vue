@@ -1,9 +1,9 @@
 <template>
-    <div class="main-body">
-        <div class="scl-icon mdi mdi-twitter" />
-        <div class="scl-icon mdi mdi-facebook" />
-        <div class="scl-icon mdi mdi-linkedin" />
-        <div class="scl-icon mdi mdi-youtube" />
+    <div class="container bg-dark d-flex justify-content-center align-items-center">
+        <div class="scl-icon bi bi-twitter" />
+        <div class="scl-icon bi bi-facebook" />
+        <div class="scl-icon bi bi-linkedin" />
+        <div class="scl-icon bi bi-youtube" />
     </div>
 </template>
 
@@ -12,18 +12,14 @@
 </script>
 
 <style scoped lang="scss">
-.main-body {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
 $twitter:   #00acee;
 $facebook:  #3b5998;
 $linkedin:  #0e76a8;
 $youtube:   #c4302b;
+
+.container {
+  height: 50vh;
+}
 
 @function shadow($color){
   $val : 0px 0px $color;
@@ -52,27 +48,27 @@ $youtube:   #c4302b;
   }
 }
 
-.mdi-facebook{
+.bi-facebook{
   background: $facebook;
   &:hover {
     box-shadow: shadow($facebook);
   }
 }
 
-.mdi-twitter{
+.bi-twitter{
   background: $twitter;
   &:hover {
     box-shadow: shadow($twitter);
   }
 }
 
-.mdi-linkedin{
+.bi-linkedin{
   background: $linkedin;
   &:hover {
     box-shadow: shadow($linkedin);
   }
 }
-.mdi-youtube{
+.bi-youtube{
   background: $youtube;
   &:hover {
     box-shadow: shadow($youtube);

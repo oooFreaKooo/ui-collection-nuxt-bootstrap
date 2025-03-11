@@ -1,5 +1,5 @@
 <template>
-    <div class="main-body">
+    <div class="container bg-dark d-flex justify-content-center align-items-center main-body">
         <label class="toggle">
             <input type="checkbox">
             <div class="off-knob" />
@@ -161,8 +161,8 @@ onMounted(() => {
 </script>
 
 <style scoped>
-* {
-  box-sizing: border-box;
+.container {
+  height: 50vh;
 }
 
 .main-body {

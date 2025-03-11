@@ -15,11 +15,6 @@
 </script>
 
 <style lang="scss" scoped>
-.main-body {
-  display: flex;
-  justify-content: center;
-}
-
 input {
   cursor: pointer;
   height: 20px;

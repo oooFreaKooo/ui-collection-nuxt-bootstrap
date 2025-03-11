@@ -1,5 +1,5 @@
 <template>
-    <div class="main-body">
+    <div class="container bg-dark d-flex justify-content-center align-items-center">
         <button
             v-for="(size, index) in sizeClasses"
             :key="index"
@@ -7,19 +7,17 @@
             @click="toggleAnimation(index)"
         >
             <span
-                class="span1 mdi"
+                class="span1 text-uppercase"
                 :class="[
-                    'mdi-size-' + size,
                     activeIndex === index ? 'scaleOut' : 'scaleIn',
                 ]"
-            />
+            >{{ size }}</span>
             <span
-                class="span2 mdi"
+                class="span2 text-uppercase"
                 :class="[
-                    'mdi-size-' + size,
                     activeIndex === index ? 'scaleOut' : 'scaleIn',
                 ]"
-            />
+            >{{ size }}</span>
         </button>
     </div>
 </template>
@@ -37,11 +35,8 @@ const sizeClasses = [
 </script>
 
 <style scoped>
-.main-body {
-  margin: 0 auto;
-  text-align: center;
-  font-size: 2rem;
-  line-height: 3rem;
+.container {
+  height: 50vh;
 }
 
 button {
@@ -50,10 +45,10 @@ button {
   background-color: #ffffff;
   border: 3px solid #ffffff;
   padding: 0;
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
-  width: 5rem;
-  height: 3rem;
+  width: 4rem;
+  height: 2.5rem;
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -78,33 +73,49 @@ span {
 
 .span1 {
   color: #000000;
-  transform: scale(1.5) translateX(5%);
+  transform: scale(1);
 }
 
 .span1.scaleIn {
   transform: scale(50);
 }
 
-.span1.scaleIn.mdi-size-l {
-  transform: scale(50) translateX(5%);
+/* Specific translations for different sizes */
+button:nth-child(1) .span1.scaleIn {  /* xs */
+  transform: scale(50) translate(14%, 1.9%);
 }
 
-.span1.scaleIn.mdi-size-xl,
-.span1.scaleIn.mdi-size-xs {
-  transform: scale(50) translate(7%, 1.9%);
+button:nth-child(2) .span1.scaleIn {  /* s */
+  transform: scale(50) translate(5%, 1.9%);
+}
+
+button:nth-child(3) .span1.scaleIn {  /* m */
+  transform: scale(50) translate(0%, -20%);
+}
+
+button:nth-child(4) .span1.scaleIn {  /* l */
+  transform: scale(50) translate(5%, 1.9%);
+}
+
+button:nth-child(5) .span1.scaleIn {  /* xl */
+  transform: scale(50) translate(16%, 1.9%);
+}
+
+button:nth-child(6) .span1.scaleIn {  /* xxl */
+  transform: scale(50) translate(0%, 1.9%);
 }
 
 .span1.scaleOut {
-  transform: scale(1.5);
+  transform: scale(1);
 }
 
 .span2 {
   color: #ffffff;
-  transform: scale(0);
+  transform: scale(1);
 }
 
 .span2.scaleIn {
-  transform: scale(1.5);
+  transform: scale(1);
 }
 
 .span2.scaleOut {

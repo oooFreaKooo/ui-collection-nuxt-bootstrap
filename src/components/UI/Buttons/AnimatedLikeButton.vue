@@ -56,12 +56,6 @@ const toggleAnimation = () => {
 </script>
 
 <style scoped>
-.main-body {
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-
 #button {
   color: currentColor;
   width: 60px;

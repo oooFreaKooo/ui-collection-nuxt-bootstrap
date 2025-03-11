@@ -182,13 +182,4 @@ onMounted(() => {
         box-sizing: inherit;
     }
 }
-
-.main-body {
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
-  display: flex;
-  font-family: 'Inter', Arial;
-  justify-content: center;
-}
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="main-body">
+    <div class="container bg-dark d-flex justify-content-center align-items-center main-body">
         <button class="button">
             <span class="default">Send</span>
             <span class="success">
@@ -24,7 +24,7 @@
 
 <script lang="ts" setup>
 onMounted(() => {
-    const { to } = useGSAP()
+    const { to, set, fromTo } = useGSAP()
     const buttons = document.querySelectorAll('.button')
 
     buttons.forEach((button) => {
@@ -42,7 +42,7 @@ onMounted(() => {
                             '--right-wing-second-y': 100,
                             'duration': 0.2,
                             onComplete () {
-                                gsap.set(button, {
+                                set(button, {
                                     '--left-wing-first-y': 0,
                                     '--left-wing-second-x': 40,
                                     '--left-wing-second-y': 100,
@@ -91,7 +91,7 @@ onMounted(() => {
                             onComplete () {
                                 setTimeout(() => {
                                     button.removeAttribute('style')
-                                    gsap.fromTo(button, {
+                                    fromTo(button, {
                                         opacity: 0,
                                         y: -8,
                                     }, {
@@ -148,6 +148,10 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+.container {
+  height: 50vh;
+}
+
 .button {
   --primary: #F6F8FF;
   --primary-dark: #D1D6EE;
@@ -337,15 +341,5 @@ onMounted(() => {
   &:after {
     box-sizing: inherit;
   }
-}
-
-.main-body {
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-  overflow: hidden;
-  font-family: 'Inter';
-  display: block;
-  justify-items: center;
-  padding-top: 10%;
 }
 </style>

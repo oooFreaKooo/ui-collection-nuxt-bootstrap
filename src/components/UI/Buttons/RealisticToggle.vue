@@ -1,7 +1,7 @@
 <template>
-    <div class="main-body">
+    <div class="container bg-dark d-flex justify-content-center align-items-center position-relative">
         <div
-            class="container on"
+            class="toggle-wrapper on"
             onclick="this.classList.toggle('off'); this.classList.toggle('on')"
         >
             <div class="toggle">
@@ -9,14 +9,6 @@
                 <div class="detail" />
                 <div class="detail" />
             </div>
-        </div>
-        <div class="footer">
-            Made by: RafaQ <br>
-            Designed by: <a
-                href="https://dribbble.com/shots/20823763-Toggle-Button-Volume-Button"
-                target="_blank"
-                rel="noopener noreferrer"
-            >Naveed Ahmad Khan</a> on Dribbble
         </div>
     </div>
 </template>
@@ -31,45 +23,31 @@ defineProps({
 </script>
 
 <style scoped>
-.main-body {
-  display: block;
-  justify-content: center;
-  background:  linear-gradient(35deg, rgb(16 15 16) 0%, rgb(32 31 32) 100%);
-  margin: 0;
-}
-.footer{
-  font-family: monospace;
-  color: #888;
-  padding: 10px;
-  font-size: 12px;
-  position: relative;
-}
-
-.footer a {
-  color: #888;
-}
-
 .container {
+  height: 50vh;
+}
+
+.toggle-wrapper {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     top: 0;
     margin: auto;
-    width: 480px;
-    height: 130px;
+    width: 280px;
+    height: 80px;
     border-radius: 100px;
     background: rgb(7, 7, 7);
     cursor: pointer;
     transition: box-shadow 0.4s ease;
 }
 @media screen and (max-width: 500px) {
-  .container {
+  .toggle-wrapper {
     width: 50vw;
     height: 16vw;
   }
 }
-.container.on {
+.toggle-wrapper.on {
     box-shadow:
     -2px -2px 4px 4px rgba(7, 7, 7, 0.5),
     -8px 0 4px 4px rgba(7, 7, 7, 0.5),
@@ -80,7 +58,7 @@ defineProps({
     inset 0 0 3px 1px rgba(0, 255, 0, 0.5),
     inset 0 0 24px 0 rgba(0, 255, 0, 0.5);
 }
-.container.off {
+.toggle-wrapper.off {
     box-shadow:
     -2px -2px 4px 4px rgba(7, 7, 7, 0.5),
     -8px 0 4px 4px rgba(7, 7, 7, 0.5),
